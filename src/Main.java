@@ -49,13 +49,13 @@ public class Main {
                 if (zn == '+') {
                     System.out.println("Ответ: " + (digA+digB));
                 }
-                if (zn =='-') {
+                else if (zn =='-') {
                     System.out.println("Ответ: " + (digA-digB));
                 }
-                if (zn =='*') {
+                else if (zn =='*') {
                     System.out.println("Ответ: " + (digA*digB));
                 }
-                if (zn == '/') {
+                else if (zn == '/') {
                     System.out.println("Ответ: " + (digA/digB));
                 }
             }
@@ -79,7 +79,7 @@ public class Main {
                 if (zn =='+') {
                     System.out.println("Ответ: " + rome[(rDigA+rDigB)]);
                 }
-                if (zn =='-') {
+                else if (zn =='-') {
                     if(rDigA-rDigB<0){
                         System.out.println("В римской системе нет отрицательных чисел");
                         System.exit(0);
@@ -90,10 +90,10 @@ public class Main {
                     }
                     System.out.println("Ответ: " + rome[(rDigA-rDigB)]);
                 }
-                if (zn =='*') {
+                else if (zn =='*') {
                     System.out.println("Ответ: " + rome[(rDigA*rDigB)]);
                 }
-                if (zn =='/') {
+                else if (zn =='/') {
                     if(rDigA/rDigB==0){
                         System.out.println("В римской системе нет дробных чисел");
                         System.exit(0);
