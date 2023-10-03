@@ -2,7 +2,10 @@ import java.util.Scanner;
 
 public class Main {
     static char zn;
-    public static void main(String[] args) {
+    public static String calc(String input){
+        int result = -1;
+        String resultR = null;
+        boolean isArab = false;
         String[] rome = new String[] {"O", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII",
                 "XIII", "XIV", "XV", "XVI", "XVII", "XVIII", "XIX", "XX", "XXI", "XXII", "XXIII", "XXIV", "XXV",
                 "XXVI", "XXVII", "XXVIII", "XXIX", "XXX", "XXXI", "XXXII", "XXXIII", "XXXIV", "XXXV", "XXXVI",
@@ -13,13 +16,9 @@ public class Main {
                 "LXXXI", "LXXXII", "LXXXIII", "LXXXIV", "LXXXV", "LXXXVI", "LXXXVII", "LXXXVIII", "LXXXIX", "XC",
                 "XCI", "XCII", "XCIII", "XCIV", "XCV", "XCVI", "XCVII", "XCVIII", "XCIX", "C"
         };
-        Scanner in = new Scanner(System.in);
-        System.out.println("Условие: выражение из 2-х чисел, арабские или римские цифры, положительные");
-        System.out.print("Введите Ваш пример: ");
-        String prim = in.nextLine();
         char[] all_chars = new char[10];
-        for (int i = 0; i < prim.length(); i++) {
-            all_chars[i] = prim.charAt(i);
+        for (int i = 0; i < input.length(); i++) {
+            all_chars[i] = input.charAt(i);
             if (all_chars[i] == '+') {
                 zn = '+';
             }
@@ -36,32 +35,31 @@ public class Main {
         String under_charString = String.valueOf(all_chars);
         String[] pies = under_charString.split("[+-/*]");
         if(pies.length != 2){
-            System.out.println("Не верные вводные данные");
-            System.exit(0);
+            throw new RuntimeException("Не верные вводные данные");
         }
         String a = pies[0].trim();
         String b = pies[1].trim();
         Test prov = new Test();
         if((prov.digitOrNot(a)) & (prov.digitOrNot(b))) {
+            isArab = true;
             int digA = Integer.parseInt(a);
             int digB = Integer.parseInt(b);
             if ((digA <= 10) & (digB <= 10)) {
                 if (zn == '+') {
-                    System.out.println("Ответ: " + (digA+digB));
+                    result=digA+digB;
                 }
                 else if (zn =='-') {
-                    System.out.println("Ответ: " + (digA-digB));
+                    result=digA-digB;
                 }
                 else if (zn =='*') {
-                    System.out.println("Ответ: " + (digA*digB));
+                    result=digA*digB;
                 }
                 else if (zn == '/') {
-                    System.out.println("Ответ: " + (digA/digB));
+                    result=digA/digB;
                 }
             }
             else {
-                System.out.println("Не верные вводные данные");
-                System.exit(0);
+                throw new RuntimeException("Не верные вводные данные");
             }
         }
         else if((!prov.digitOrNot(a)) & !(prov.digitOrNot(b))) {
@@ -69,45 +67,53 @@ public class Main {
             int rDigB = -1;
             for (int i = 0; i < rome.length; i++) {
                 if (rome[i].equals(a)){
-                   rDigA = i;
+                    rDigA = i;
                 }
                 if (rome[i].equals(b)){
-                   rDigB = i;
+                    rDigB = i;
                 }
             }
             if((rDigA<=10) & (rDigB<=10)){
                 if (zn =='+') {
-                    System.out.println("Ответ: " + rome[(rDigA+rDigB)]);
+                    resultR=rome[(rDigA+rDigB)];
                 }
                 else if (zn =='-') {
                     if(rDigA-rDigB<0){
-                        System.out.println("В римской системе нет отрицательных чисел");
-                        System.exit(0);
+                        throw new RuntimeException("В римской системе нет отрицательных чисел");
                     }
                     else if(rDigA-rDigB==0){
-                        System.out.println("Ответ: 0, но по заданию это ошибка в введенных данных))");
-                        System.exit(0);
+                        throw new RuntimeException("Ответ: 0, но по заданию это ошибка в введенных данных))");
                     }
-                    System.out.println("Ответ: " + rome[(rDigA-rDigB)]);
+                    resultR = rome[(rDigA-rDigB)];
                 }
                 else if (zn =='*') {
-                    System.out.println("Ответ: " + rome[(rDigA*rDigB)]);
+                    resultR = rome[(rDigA*rDigB)];
                 }
                 else if (zn =='/') {
                     if(rDigA/rDigB==0){
-                        System.out.println("В римской системе нет дробных чисел");
-                        System.exit(0);
+                        throw new RuntimeException("В римской системе нет дробных чисел");
                     }
-                    System.out.println("Ответ: " + rome[(rDigA/rDigB)]);
+                    resultR = rome[(rDigA/rDigB)];
                 }
             }
             else {
-                System.out.println("Не верные вводные данные");
+                throw new RuntimeException("Не верные вводные данные");
             }
         } else {
-            System.out.println("Не верные вводные данные");
-            System.exit(0);
+            throw new RuntimeException("Не верные вводные данные");
         }
+        if(isArab){
+            return Integer.toString(result);}
+        else {
+            return resultR;
+        }
+    }
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        System.out.println("Условие: выражение из 2-х чисел, арабские или римские цифры, положительные");
+        System.out.print("Введите Ваш пример: ");
+        String prim = in.nextLine();
+        System.out.println(calc(prim));
     }
 }
 class Test{
