@@ -22,14 +22,17 @@ public class Main {
             if (all_chars[i] == '+') {
                 zn = '+';
             }
-            if (all_chars[i] == '-') {
+            else if (all_chars[i] == '-') {
                 zn = '-';
             }
-            if (all_chars[i] == '*') {
+            else if (all_chars[i] == '*') {
                 zn = '*';
             }
-            if (all_chars[i] == '/') {
+            else if (all_chars[i] == '/') {
                 zn = '/';
+            }
+            else {
+                throw new RuntimeException("Не верные вводные данные");
             }
         }
         String under_charString = String.valueOf(all_chars);
