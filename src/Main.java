@@ -22,28 +22,28 @@ public class Main {
             if (all_chars[i] == '+') {
                 zn = '+';
             }
-            else if (all_chars[i] == '-') {
+            if (all_chars[i] == '-') {
                 zn = '-';
             }
-            else if (all_chars[i] == '*') {
+            if (all_chars[i] == '*') {
                 zn = '*';
             }
-            else if (all_chars[i] == '/') {
+            if (all_chars[i] == '/') {
                 zn = '/';
             }
-            else {
-                throw new RuntimeException("Не верные вводные данные");
-            }
+
+        }
+        if(zn==0){
+            throw new RuntimeException("Не верные вводные данные: знак должен быть '+' '-' '/' '*'.");
         }
         String under_charString = String.valueOf(all_chars);
         String[] pies = under_charString.split("[+-/*]");
         if(pies.length != 2){
-            throw new RuntimeException("Не верные вводные данные");
+            throw new RuntimeException("Не верные вводные данные: пример должен быть вида a+b");
         }
         String a = pies[0].trim();
         String b = pies[1].trim();
-        Test prov = new Test();
-        if((prov.digitOrNot(a)) & (prov.digitOrNot(b))) {
+        if(a.matches("^[1-9]$|10$")&&b.matches("^[1-9]$|10$")){
             isArab = true;
             int digA = Integer.parseInt(a);
             int digB = Integer.parseInt(b);
@@ -62,10 +62,10 @@ public class Main {
                 }
             }
             else {
-                throw new RuntimeException("Не верные вводные данные");
+                throw new RuntimeException("Числа должны быть <=10");
             }
         }
-        else if((!prov.digitOrNot(a)) & !(prov.digitOrNot(b))) {
+        else if(a.matches("^[XIV]{1,4}$")&&b.matches("^[XIV]{1,4}$")){
             int rDigA = -1;
             int rDigB = -1;
             for (int i = 0; i < rome.length; i++) {
@@ -102,8 +102,9 @@ public class Main {
             else {
                 throw new RuntimeException("Не верные вводные данные");
             }
-        } else {
-            throw new RuntimeException("Не верные вводные данные");
+        }
+        else {
+            throw new RuntimeException("Должны быть: I,II,III,IV,V,VI,VII,VIII,IX,X или 1-10");
         }
         if(isArab){
             return Integer.toString(result);}
@@ -113,21 +114,9 @@ public class Main {
     }
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
-        System.out.println("Условие: выражение из 2-х чисел, арабские или римские цифры, положительные");
+        System.out.println("Условие: выражение из 2-х чисел, арабские или римские цифры, положительные, до 10 включительно");
         System.out.print("Введите Ваш пример: ");
         String prim = in.nextLine();
         System.out.println(calc(prim));
-    }
-}
-class Test{
-    Boolean digitOrNot(String digX) {
-        try {
-            int digA = Integer.parseInt(digX);
-            return true;
-        }
-        catch (NumberFormatException nfe) {
-            //System.out.println("NumberFormatException: " + nfe.getMessage());
-        }
-        return false;
     }
 }
